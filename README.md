@@ -6,7 +6,7 @@ $ . venv/bin/activate
 ```
 
 Acesse a pasta shopback-challenge e execute
-### Ativar virtualenv
+### Criação da database e table summary
 ```bash
 $ python create_database.py
 $ python create_summary.py
