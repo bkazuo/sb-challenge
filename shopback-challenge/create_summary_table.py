@@ -53,3 +53,6 @@ for order in orders_collection.find():
             "orders": order_products
         }
         summary_id = summary_collection.insert_one(data).inserted_id
+
+
+## Upsert method - Create if not exists, otherwise, update it
