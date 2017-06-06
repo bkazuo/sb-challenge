@@ -39,4 +39,18 @@ monthly_rev_avg = summary_collection.aggregate( [{"$unwind": "$orders"},
 
 for month_rev_avg in monthly_rev_avg:
     pprint(month_rev_avg)
+print "-----------"
+
+
+# Perfil de gastos por categoria mensal
+monthly_rev_per_category = summary_collection.aggregate([{"$unwind": "$orders"}, {"$unwind": "$orders.categories"},
+        {"$group": {
+            "_id":{"order_date": "$orders.order_date", "category": "$orders.categories"}, 
+            "total": {"$sum": "$orders.total"}
+            }},
+        {"$sort": {"_id.order_date": -1}}
+    ])
+
+for month_rev_per_categ in monthly_rev_per_category:
+    pprint(month_rev_per_categ)
 
