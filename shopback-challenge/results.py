@@ -26,6 +26,7 @@ monthly_rev = summary_collection.aggregate( [{"$unwind": "$orders"},
         {"$sort": {"_id": -1}}
     ])
 
+print "Perfil de gastos mensal"
 for month_rev in monthly_rev:
     pprint(month_rev)
 print "-----------"
@@ -37,6 +38,7 @@ monthly_rev_avg = summary_collection.aggregate( [{"$unwind": "$orders"},
         {"$limit": 3}
     ])
 
+print "Média dos 3 últimos meses de gastos mensal"
 for month_rev_avg in monthly_rev_avg:
     pprint(month_rev_avg)
 print "-----------"
@@ -51,6 +53,8 @@ monthly_rev_per_category = summary_collection.aggregate([{"$unwind": "$orders"},
         {"$sort": {"_id.order_date": -1}}
     ])
 
+
+print "Perfil de gastos por categoria mensal"
 for month_rev_per_categ in monthly_rev_per_category:
     pprint(month_rev_per_categ)
 print "-----------"
@@ -65,5 +69,6 @@ monthly_rev_avg_per_category = summary_collection.aggregate([{"$unwind": "$order
         {"$match": {"_id.order_date": {"$in": ['20175', '20174', '20173']}}}
     ])
 
+print "Média dos 3 últimos meses por categoria mensal"
 for month_rev_avg_per_categ in monthly_rev_avg_per_category:
     pprint(month_rev_avg_per_categ)
