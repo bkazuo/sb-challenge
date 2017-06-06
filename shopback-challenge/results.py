@@ -53,4 +53,17 @@ monthly_rev_per_category = summary_collection.aggregate([{"$unwind": "$orders"},
 
 for month_rev_per_categ in monthly_rev_per_category:
     pprint(month_rev_per_categ)
+print "-----------"
 
+# Média dos 3 últimos meses por categoria mensal
+monthly_rev_avg_per_category = summary_collection.aggregate([{"$unwind": "$orders"}, {"$unwind": "$orders.categories"},
+        {"$group": {
+            "_id":{"order_date": "$orders.order_date", "category": "$orders.categories"}, 
+            "total": {"$avg": "$orders.total"}
+            }},
+        {"$sort": {"_id.order_date": -1}},
+        {"$match": {"_id.order_date": {"$in": ['20175', '20174', '20173']}}}
+    ])
+
+for month_rev_avg_per_categ in monthly_rev_avg_per_category:
+    pprint(month_rev_avg_per_categ)
