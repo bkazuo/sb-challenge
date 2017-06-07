@@ -2,6 +2,7 @@
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import datetime
+import time
 from helper import *
 from settings import *
 from pprint import pprint
@@ -20,6 +21,9 @@ customers_collection = db.customers
 carts_collection = db.carts
 products_collection = db.products
 
+summary_collection.create_index('customer_id')
+
+start_time = time.time()
 for order in orders_collection.find():
     order_products = []
     cart_document = carts_collection.find({"_id": ObjectId(order['cart_id'])}).limit(1)
@@ -56,3 +60,6 @@ for order in orders_collection.find():
 
 
 ## Upsert method - Create if not exists, otherwise, update it
+elapsed_time = time.time() - start_time
+
+print "Time to execute:" + str(elapsed_time)

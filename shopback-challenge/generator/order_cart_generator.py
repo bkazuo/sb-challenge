@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-# import datetime
+import time
 import sys
 sys.path.insert(0, '../')
 
@@ -21,6 +21,7 @@ orders_collection = db.orders
 total_customers = customer_collection.count()
 total_products = products_collection.count()
 
+start_time = time.time()
 for count in range(NUMBER_OF_ORDERS):
     random_customer = customer_collection.find().limit(-1).skip(createRandomIntBetween(total_customers-1)).next()
 
@@ -70,3 +71,7 @@ for count in range(NUMBER_OF_ORDERS):
     order_id = orders_collection.insert_one(order_data).inserted_id
     
     print str(cart_id) + "--" + str(order_id)
+
+elapsed_time = time.time() - start_time
+
+print "Time to execute:" + str(elapsed_time)
